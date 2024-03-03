@@ -1,0 +1,41 @@
+{
+    "name": "games-night",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --open",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint ./src",
+        "lint:fix": "npm run lint --fix",
+        "coverage": "vitest run --coverage",
+        "test": "vitest run && npm run coverage"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.15.11",
+        "@mui/material": "^5.15.11",
+        "@tanstack/react-query": "^5.24.6",
+        "globals": "^13.24.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.22.2"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.28",
+        "@types/react-dom": "^18.0.11",
+        "@typescript-eslint/eslint-plugin": "^7.1.0",
+        "@typescript-eslint/parser": "^7.1.0",
+        "@vitejs/plugin-react": "^4.0.0",
+        "eslint": "^8.57.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jsx-a11y": "^6.8.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "typescript": "^5.0.2",
+        "vite": "^5.1.4",
+        "vitest": "^1.2.2"
+    }
+}
