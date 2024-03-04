@@ -131,7 +131,7 @@ export const KingsCup = (): JSX.Element => {
             <Box
                 sx={{
                     backgroundColor: `${kingsCup.color}.main`,
-                    height: "100%",
+                    height: "90vh",
                 }}
                 component={CardActionArea}
                 onClick={random}>

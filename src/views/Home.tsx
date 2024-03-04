@@ -2,10 +2,10 @@ import { JSX } from "react";
 
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
-import SportsBarRoundedIcon from "@mui/icons-material/SportsBarRounded";
 import { Stack, Box } from "@mui/material";
 
-import { GameCard } from "../components/GameCard";
+import { GameCard } from "@/components/GameCard";
+import { SpadeIcon } from "@/Icons/Card";
 
 export const Home = (): JSX.Element => {
     return (
@@ -16,7 +16,7 @@ export const Home = (): JSX.Element => {
                     body="A drinking game for the whole gang!"
                     pageSlug="kings-cup"
                     colour="error"
-                    icon={<SportsBarRoundedIcon fontSize="large" />}
+                    icon={<SpadeIcon fontSize="large" />}
                 />
                 <GameCard
                     name="Trivia"

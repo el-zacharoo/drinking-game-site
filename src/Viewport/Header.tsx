@@ -11,6 +11,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Modal from "@mui/material/Modal";
+import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import { useNavigate } from "react-router-dom";
 
@@ -28,25 +29,25 @@ const Header = (): JSX.Element => {
 
     return (
         <AppBar
-            sx={{ py: 4 }}
             id="header"
             color="transparent"
             position="relative"
             elevation={0}>
-            <Toolbar>
-                <Box sx={{ flexGrow: 1 }}>
-                    <Link
-                        variant="h4"
-                        onClick={() =>
-                            navigate("/", { state: { data: "home" } })
-                        }
-                        component="button"
-                        sx={{ cursor: "pointer" }}
-                        underline="none"
-                        color="inherit">
-                        {appName}
-                    </Link>
-                </Box>
+            <Toolbar
+                sx={{ height: "10vh" }}
+                component={Stack}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center">
+                <Link
+                    variant="h4"
+                    onClick={() => navigate("/", { state: { data: "home" } })}
+                    component="button"
+                    sx={{ cursor: "pointer" }}
+                    underline="none"
+                    color="inherit">
+                    {appName}
+                </Link>
                 <OpenedMenu menuItems={menuItems} handleNavigate={navigate} />
             </Toolbar>
         </AppBar>
