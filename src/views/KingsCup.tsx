@@ -1,8 +1,18 @@
 import { JSX, useState } from "react";
 
-import { Box, CardActionArea, Typography, Stack } from "@mui/material";
+import {
+    Box,
+    CardActionArea,
+    Typography,
+    Stack,
+    SvgIconProps,
+} from "@mui/material";
 
 import { PopupModal } from "@/components/PopupModal";
+import { ClubsIcon } from "@/Icons/Clubs";
+import { DiamondsIcon } from "@/Icons/Diamonds";
+import { HeartsIcon } from "@/Icons/Hearts";
+import { SpadesIcon } from "@/Icons/Spades";
 
 type TKingsCup = {
     [key: string]: string;
@@ -125,6 +135,21 @@ export const KingsCup = (): JSX.Element => {
         "Tap the screen to draw a card.",
     ];
 
+    const Icon = (props: SvgIconProps): JSX.Element => {
+        switch (kingsCup.suit) {
+            case "Hearts":
+                return <HeartsIcon {...props} />;
+            case "Diamonds":
+                return <DiamondsIcon {...props} />;
+            case "Clubs":
+                return <ClubsIcon {...props} />;
+            case "Spades":
+                return <SpadesIcon {...props} />;
+            default:
+                return <ClubsIcon {...props} />;
+        }
+    };
+
     return (
         <>
             <PopupModal title="Kings Cup" rules={rules} />
@@ -152,6 +177,13 @@ export const KingsCup = (): JSX.Element => {
                         </>
                     ) : (
                         <>
+                            <Icon
+                                sx={{
+                                    color: `${kingsCup.color}.contrastText`,
+                                    width: 55,
+                                    height: 55,
+                                }}
+                            />
                             <Typography
                                 sx={{
                                     color: `${kingsCup.color}.contrastText`,
