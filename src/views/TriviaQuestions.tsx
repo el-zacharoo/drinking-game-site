@@ -39,7 +39,7 @@ const TriviaCategory: { [key: string]: TTriviaCategory } = {
     CARTOON_ANIMATIONS: { id: 32, name: "Cartoons" },
 };
 
-function decodeHTMLEntities(str: string) {
+function decodeHTMLEntities(str: string): string | null | undefined {
     if (str && typeof str === "string") {
         var element = document.createElement("div");
         str = str.replace(/<\/?[^>]+(>|$)/g, "");
@@ -87,7 +87,6 @@ export const TriviaQuestions = (): JSX.Element => {
             if (data.response_code === 0) {
                 const results = data.results[0];
                 setQuestions(results);
-                console.log(results);
             }
             if (data.response_code === 1) {
                 setError("Failed to fetch question, please try again.");
