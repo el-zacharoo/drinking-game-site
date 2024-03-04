@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
 import { JSX, useState } from "react";
+
+import { Card, CardActionArea, Typography, Stack } from "@mui/material";
 
 type TKingsCup = {
     [key: string]: string;
@@ -7,77 +8,79 @@ type TKingsCup = {
 
 const kingsCupObj: { [key: string]: TKingsCup } = {
     ACE: {
-        value: "ACE",
+        value: "Ace",
         name: "Waterfall",
         description:
             "Everyone starts drinking, and no one can stop until the person to their left stops.",
     },
     TWO: {
-        value: "TWO",
+        value: "Two",
         name: "You",
         description: "Pick someone to drink.",
     },
     THREE: {
-        value: "THREE",
+        value: "Three",
         name: "Me",
-        description: "You drink",
+        description: "Finish your drink.",
     },
     FOUR: {
-        value: "FOUR",
+        value: "Four",
         name: "Floor",
-        description: "Everyone touches the floor, last person drinks.",
+        description:
+            "Everyone touches the floor, last person finishes their drink",
     },
     FIVE: {
-        value: "FIVE",
+        value: "Five",
         name: "Guys",
         description: "Guys drink.",
     },
     SIX: {
-        value: "SIX",
+        value: "Six",
         name: "Chicks",
         description: "Chicks drink.",
     },
     SEVEN: {
-        value: "SEVEN",
+        value: "Seven",
         name: "Heaven",
-        description: "Last person to raise their hand drinks.",
+        description: "Last person to raise their hand finishes their drink.",
     },
     EIGHT: {
-        value: "EIGHT",
+        value: "Eight",
         name: "Mate",
-        description: "Pick someone to drink with you.",
+        description:
+            "Pick someone to drink when you drink. Lasts until the next 8 is drawn.",
     },
     NINE: {
-        value: "NINE",
+        value: "Nine",
         name: "Rhyme",
         description:
             "Pick a word, and everyone has to rhyme with it, first person who can't think of anything, drinks.",
     },
     TEN: {
-        value: "TEN",
+        value: "Ten",
         name: "Categories",
         description:
             "Pick a category, and everyone has to say something from that category, first person who can't think of anything, drinks.",
     },
     JACK: {
-        value: "JACK",
+        value: "Jack",
         name: "Never Have I Ever",
         description: "Play never have I ever.",
     },
     QUEEN: {
-        value: "QUEEN",
+        value: "Queen",
         name: "Questions",
         description:
             "Start by asking someone a question, and they ask someone else a question, first person who can't think of anything, drinks.",
     },
     KING: {
-        value: "KING",
+        value: "King",
         name: "King's Cup",
         description: "Pour some of your drink into the King's Cup.",
     },
 };
 
-const suit = ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
+const suit = ["Hearts", "Diamonds", "Clubs", "Spades"];
 
 export const KingsCup = (): JSX.Element => {
     const [kingsCup, setKingsCup] = useState<TKingsCup>({
@@ -86,33 +89,80 @@ export const KingsCup = (): JSX.Element => {
         value: "",
         suit: "",
     });
+
+    const suitColor = (randomSuit: string): string => {
+        let color = "";
+        if (randomSuit === "Hearts" || randomSuit === "Diamonds") {
+            color = "error";
+        }
+        if (randomSuit === "Clubs" || randomSuit === "Spades") {
+            color = "primary";
+        }
+        return color;
+    };
+
     const random = (): void => {
         const categories = Object.values(kingsCupObj);
         const randomIndex = Math.floor(Math.random() * categories.length);
         const randomSuit = suit[Math.floor(Math.random() * suit.length)];
-
         const randomCategory = categories[randomIndex];
+
         setKingsCup({
             value: randomCategory.value,
             name: randomCategory.name,
             description: randomCategory.description,
             suit: randomSuit,
+            color: suitColor(randomSuit),
         });
     };
 
     return (
-        <>
-            <Button onClick={random}>Draw a card</Button>
-            {kingsCup.value && (
-                <>
-                    <p>{kingsCup.name}</p>
-                    <p>{kingsCup.description}</p>
-                    <p>
-                        {kingsCup.value} of {kingsCup.suit}
-                    </p>
-                </>
-            )}
-        </>
+        <Card sx={{ backgroundColor: `${kingsCup.color}.main` }}>
+            <CardActionArea sx={{ p: 2, height: 500 }} onClick={random}>
+                <Stack
+                    sx={{ my: 1 }}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}>
+                    {!kingsCup.value ? (
+                        <>
+                            <Typography variant="h1">
+                                Draw a card to reveal your fate!
+                            </Typography>
+                            <Typography variant="h3">
+                                Tap anywhere to draw a card
+                            </Typography>
+                        </>
+                    ) : (
+                        <>
+                            <Typography
+                                sx={{
+                                    color: `${kingsCup.color}.contrastText`,
+                                }}
+                                variant="h1">
+                                {" "}
+                                {kingsCup.value} of {kingsCup.suit}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    color: `${kingsCup.color}.contrastText`,
+                                }}
+                                variant="h1">
+                                {kingsCup.name}
+                            </Typography>
+                            <Typography
+                                variant="h1"
+                                sx={{
+                                    color: `${kingsCup.color}.contrastText`,
+                                }}>
+                                {kingsCup.description}
+                            </Typography>
+                        </>
+                    )}
+                </Stack>
+            </CardActionArea>
+        </Card>
     );
 };
 
