@@ -140,6 +140,7 @@ export const TriviaQuestions = (): JSX.Element => {
             <Card
                 elevation={0}
                 sx={{
+                    minHeight: "100vh",
                     backgroundColor: !cancel ? "warning.main" : "primary.main",
                 }}>
                 <CardActionArea onClick={handleStartTimeout} sx={{ p: 2 }}>
