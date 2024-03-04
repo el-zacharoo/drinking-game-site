@@ -3,7 +3,7 @@ import { lazy } from "react";
 const Home = lazy(() => import("@/views/Home"));
 const TriviaQuestions = lazy(() => import("@/views/TriviaQuestions"));
 const WordGenerator = lazy(() => import("@/views/WordGenerator"));
-const Drinkalo = lazy(() => import("@/views/Drinkalo"));
+const KingsCup = lazy(() => import("@/views/KingsCup"));
 
 export const menuItems = [
     {
@@ -24,6 +24,16 @@ export const menuItems = [
     {
         name: "Drinking Games",
         pageSlug: "drinking-games",
-        element: <Drinkalo />,
+        element: <KingsCup />,
     },
+    {
+        name: "Cahütte",
+        pageSlug: "cahutte",
+        element: <Home />,
+    },
+    {
+        name: "King's Cup",
+        pageSlug: "kings-cup",
+        element: <KingsCup />,
+    }
 ];

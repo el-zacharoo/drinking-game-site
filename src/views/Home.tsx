@@ -12,9 +12,9 @@ export const Home = (): JSX.Element => {
         <Box sx={{ mx: "1rem" }}>
             <Stack spacing={2}>
                 <GameCard
-                    name="Drinkalo"
+                    name="King's Cup"
                     body="A drinking game for the whole gang!"
-                    pageSlug="drinkalo"
+                    pageSlug="kings-cup"
                     colour="error"
                     icon={<SportsBarRoundedIcon fontSize="large" />}
                 />
