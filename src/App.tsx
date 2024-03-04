@@ -1,4 +1,4 @@
-import { lazy, Suspense, JSX } from "react";
+import { Suspense, JSX } from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
@@ -6,11 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Outline } from "@/components/Outline";
+import { menuItems } from "@/MenuItems";
 import { theme } from "@/theme";
 import Viewport from "@/Viewport";
-
-const TriviaQuestions = lazy(() => import("@/views/TriviaQuestions"));
-const WordGenerator = lazy(() => import("@/views/WordGenerator"));
 
 const queryClient = new QueryClient();
 
@@ -23,14 +21,13 @@ const App = (): JSX.Element => {
                     <Suspense fallback={<Outline />}>
                         <Viewport>
                             <Routes>
-                                <Route
-                                    path="/trivia"
-                                    element={<TriviaQuestions />}
-                                />
-                                <Route
-                                    path="/word-generator"
-                                    element={<WordGenerator />}
-                                />
+                                {menuItems.map((item, index) => (
+                                    <Route
+                                        key={index}
+                                        path={`/${item.pageSlug}`}
+                                        element={item.element}
+                                    />
+                                ))}
                             </Routes>
                         </Viewport>
                     </Suspense>

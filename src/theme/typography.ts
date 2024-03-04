@@ -2,61 +2,48 @@ import { TypographyVariantsOptions } from "@mui/material";
 
 export const typography: TypographyVariantsOptions = {
     h1: {
-        fontFamily: "futura-pt",
-        fontSize: "50px",
-        fontWeight: 500,
-        letterSpacing: "0em"
+        fontSize: "3rem",
+        fontWeight: 700,
     },
     h2: {
-        fontSize: "45px",
-        fontWeight: 400,
+        fontSize: "2.5rem",
+        fontWeight: 700,
     },
     h3: {
-        fontSize: "34px",
-        fontWeight: 500,
-        fontFamily: "ArnoPro",
-        fontStyle: "normal",
-        letterSpacing: ".02em"
+        fontSize: "2rem",
+        fontWeight: 700,
     },
     h4: {
-        fontSize: "1.75rem",
-        fontWeight: 400,
-        fontFamily: "proxima-nova",
+        fontSize: "1.5rem",
+        fontWeight: 700,
     },
     h5: {
-        fontSize: "1.5rem",
-        fontWeight: 500,
-        fontFamily: "proxima-nova",
-    },
-    h6: {
         fontSize: "1.25rem",
         fontWeight: 700,
-
+    },
+    h6: {
+        fontSize: "1rem",
+        fontWeight: 700,
     },
     subtitle1: {
         fontSize: "1rem",
-        fontWeight: 800,
-        letterSpacing: ".025em",
+        fontWeight: 400,
     },
     subtitle2: {
         fontSize: "0.875rem",
-        fontWeight: 500,
+        fontWeight: 400,
     },
     body1: {
-        fontSize: "18px",
+        fontSize: "1rem",
         fontWeight: 400,
-        letterSpacing: ".05em",
-        fontFamily: "proxima-nova",
     },
     body2: {
-        fontSize: "14px",
-        fontWeight: 300,
-        letterSpacing: ".05em",
+        fontSize: "0.875rem",
+        fontWeight: 400,
     },
     button: {
-        fontSize: "12px",
-        fontWeight: 500,
-        letterSpacing: ".25em",
+        fontSize: "1rem",
+        fontWeight: 700,
     },
     caption: {
         fontSize: "0.75rem",

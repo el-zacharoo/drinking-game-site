@@ -1,11 +1,10 @@
 import { useState, JSX } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import List from "@mui/material/List";
@@ -15,50 +14,21 @@ import Modal from "@mui/material/Modal";
 import Toolbar from "@mui/material/Toolbar";
 import { useNavigate } from "react-router-dom";
 
+import { menuItems } from "@/MenuItems";
+
 type NavLinks = {
-    fields: {
-        name: string;
-        pageSlug: string;
-    };
+    name: string;
+    pageSlug: string;
 };
 
 const appName = import.meta.env.VITE_APP_NAME || "";
-const menuItems = [
-    {
-        fields: {
-            name: "Home",
-            pageSlug: "",
-        },
-    },
-    {
-        fields: {
-            name: "Word Generator",
-            pageSlug: "word-generator",
-        },
-    },
-    {
-        fields: {
-            name: "Trivia",
-            pageSlug: "trivia",
-        },
-    },
-];
 
 const Header = (): JSX.Element => {
     const navigate = useNavigate();
 
-    const handleNavigate = (path: string): void => {
-        if (!path) {
-            return;
-        }
-        if (path === "home") {
-            navigate("/", { state: { data: path } });
-        }
-        navigate(`/${path}`, { state: { data: path } });
-    };
-
     return (
         <AppBar
+            sx={{ my: 4 }}
             id="header"
             color="transparent"
             position="relative"
@@ -66,6 +36,7 @@ const Header = (): JSX.Element => {
             <Toolbar>
                 <Box sx={{ flexGrow: 1 }}>
                     <Link
+                        variant="h4"
                         onClick={() =>
                             navigate("/", { state: { data: "home" } })
                         }
@@ -76,33 +47,7 @@ const Header = (): JSX.Element => {
                         {appName}
                     </Link>
                 </Box>
-                <Box
-                    sx={{
-                        display: { xs: "none", md: "flex" },
-                        "&:hover": { color: "grey.200" },
-                    }}>
-                    {menuItems.map((item, index) => (
-                        <Button
-                            key={index}
-                            sx={{
-                                mx: 1,
-                                "&:hover": {
-                                    color: "primary.main",
-                                    backgroundColor: "background.default",
-                                },
-                            }}
-                            color="inherit"
-                            onClick={() =>
-                                handleNavigate(item.fields.pageSlug)
-                            }>
-                            {item.fields.name}
-                        </Button>
-                    ))}
-                </Box>
-                <OpenedMenu
-                    menuItems={menuItems}
-                    handleNavigate={handleNavigate}
-                />
+                <OpenedMenu menuItems={menuItems} handleNavigate={navigate} />
             </Toolbar>
         </AppBar>
     );
@@ -136,14 +81,11 @@ const OpenedMenu = (props: OpenedMenuProps): JSX.Element => {
         "rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 5px 8px 0px, rgba(0, 0, 0, 0.12) 0px 1px 14px 0px";
 
     return (
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        <Box>
             <IconButton size="large" onClick={handleOpen} color="inherit">
-                <MenuIcon fontSize="large" />
+                <MenuRoundedIcon fontSize="large" />
             </IconButton>
-            <Modal
-                sx={{ display: { xs: "block", md: "none" } }}
-                open={open}
-                onClose={handleClose}>
+            <Modal open={open} onClose={handleClose}>
                 <Box
                     sx={{
                         position: "absolute",
@@ -192,10 +134,8 @@ const OpenedMenu = (props: OpenedMenuProps): JSX.Element => {
                                             backgroundColor: "primary.light",
                                         },
                                     }}
-                                    onClick={() =>
-                                        navigateFn(item.fields.pageSlug)
-                                    }>
-                                    {item.fields.name}
+                                    onClick={() => navigateFn(item.pageSlug)}>
+                                    {item.name}
                                 </ListItemButton>
                             </ListItem>
                         ))}
