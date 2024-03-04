@@ -1,5 +1,7 @@
 import React, { JSX } from "react";
 
+import { Box } from "@mui/material";
+
 import Header from "./Header";
 
 type ViewportProps = {
@@ -8,10 +10,10 @@ type ViewportProps = {
 
 const Viewport = ({ children }: ViewportProps): JSX.Element => {
     return (
-        <>
+        <Box sx={{ height: "100vh" }}>
             <Header />
             {children}
-        </>
+        </Box>
     );
 };
 

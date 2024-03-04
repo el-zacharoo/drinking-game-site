@@ -1,6 +1,6 @@
 import { JSX, useState } from "react";
 
-import { Card, CardActionArea, Typography, Stack } from "@mui/material";
+import { Box, CardActionArea, Typography, Stack } from "@mui/material";
 
 type TKingsCup = {
     [key: string]: string;
@@ -117,52 +117,60 @@ export const KingsCup = (): JSX.Element => {
     };
 
     return (
-        <Card sx={{ backgroundColor: `${kingsCup.color}.main` }}>
-            <CardActionArea sx={{ p: 2, height: 500 }} onClick={random}>
-                <Stack
-                    sx={{ my: 1 }}
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}>
-                    {!kingsCup.value ? (
-                        <>
-                            <Typography variant="h1">
-                                Draw a card to reveal your fate!
-                            </Typography>
-                            <Typography variant="h3">
-                                Tap anywhere to draw a card
-                            </Typography>
-                        </>
-                    ) : (
-                        <>
-                            <Typography
-                                sx={{
-                                    color: `${kingsCup.color}.contrastText`,
-                                }}
-                                variant="h1">
-                                {" "}
-                                {kingsCup.value} of {kingsCup.suit}
-                            </Typography>
-                            <Typography
-                                sx={{
-                                    color: `${kingsCup.color}.contrastText`,
-                                }}
-                                variant="h1">
-                                {kingsCup.name}
-                            </Typography>
-                            <Typography
-                                variant="h1"
-                                sx={{
-                                    color: `${kingsCup.color}.contrastText`,
-                                }}>
-                                {kingsCup.description}
-                            </Typography>
-                        </>
-                    )}
-                </Stack>
-            </CardActionArea>
-        </Card>
+        <Box
+            sx={{ backgroundColor: `${kingsCup.color}.main`, height: "100%" }}
+            component={CardActionArea}
+            onClick={random}>
+            <Stack
+                sx={{ my: 1 }}
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}>
+                {!kingsCup.value ? (
+                    <>
+                        <Typography variant="h1">
+                            Draw a card to reveal your fate!
+                        </Typography>
+                        <Typography variant="h3">
+                            Tap anywhere to draw a card
+                        </Typography>
+                    </>
+                ) : (
+                    <>
+                        <Typography
+                            sx={{
+                                color: `${kingsCup.color}.contrastText`,
+                            }}
+                            variant="h1">
+                            {" "}
+                            {kingsCup.value} of {kingsCup.suit}
+                        </Typography>
+
+                        <Typography
+                            sx={{
+                                color: `${kingsCup.color}.contrastText`,
+                            }}
+                            variant="h3">
+                            {kingsCup.name}
+                        </Typography>
+                        <Typography
+                            textAlign="center"
+                            variant="h3"
+                            sx={{
+                                maxWidth: {
+                                    xs: "90%",
+                                    sm: "80%",
+                                    md: "50%",
+                                },
+                                color: `${kingsCup.color}.contrastText`,
+                            }}>
+                            {kingsCup.description}
+                        </Typography>
+                    </>
+                )}
+            </Stack>
+        </Box>
     );
 };
 

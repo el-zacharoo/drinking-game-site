@@ -1,8 +1,8 @@
-import { JSX, useState, useEffect } from "react";
+import { JSX, useState, useEffect, useCallback } from "react";
 
-import { Button, Typography, Card, Chip, Stack } from "@mui/material";
-import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
 import TimerOffOutlinedIcon from "@mui/icons-material/TimerOffOutlined";
+import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
+import { Button, Typography, Card, Chip, Stack } from "@mui/material";
 
 const init = 30;
 
@@ -24,20 +24,20 @@ export const WordGenerator = (): JSX.Element => {
         }, 10000);
     };
 
-    const stopTimer = (): void => {
+    const stopTimer = useCallback((): void => {
         if (intervalId) {
             clearInterval(intervalId);
             setCancel(false);
             setCountdown(init);
             setIntervalId(null);
         }
-    };
+    }, [intervalId]);
 
     useEffect(() => {
         if (countdown === 0) {
             stopTimer();
         }
-    }, [countdown]);
+    }, [countdown, stopTimer]);
 
     return (
         <Card>

@@ -28,7 +28,7 @@ const Header = (): JSX.Element => {
 
     return (
         <AppBar
-            sx={{ my: 4 }}
+            sx={{ py: 4 }}
             id="header"
             color="transparent"
             position="relative"
