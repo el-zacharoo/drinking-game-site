@@ -2,6 +2,7 @@ import { JSX } from "react";
 
 import {
     Card,
+    CardHeader,
     CardActionArea,
     CardContent,
     Typography,
@@ -19,7 +20,8 @@ type ColorIndex =
     | "info";
 
 type GameCardProps = {
-    name: string;
+    headline: string;
+    subheader: string;
     body: string;
     pageSlug: string;
     colour: ColorIndex;
@@ -27,22 +29,18 @@ type GameCardProps = {
 };
 
 export const GameCard = (props: GameCardProps): JSX.Element => {
-    const { name, body, pageSlug, colour, icon } = props;
+    const { headline, body, subheader, pageSlug, colour, icon } = props;
 
     const navigate = useNavigate();
 
     return (
-        <Card elevation={0} sx={{ backgroundColor: `${colour}.main` }}>
+        <Card
+            id={pageSlug}
+            elevation={0}
+            sx={{ backgroundColor: `${colour}.main` }}>
             <CardActionArea onClick={() => navigate(`/${pageSlug}`)}>
-                <CardContent component={Stack} spacing={2}>
-                    <Stack spacing={1} direction="row">
-                        <Typography
-                            sx={{
-                                color: `${colour}.contrastText`,
-                            }}
-                            variant="h3">
-                            {name}
-                        </Typography>
+                <CardHeader
+                    avatar={
                         <MuiIcon
                             fontSize="large"
                             sx={{
@@ -50,7 +48,26 @@ export const GameCard = (props: GameCardProps): JSX.Element => {
                             }}>
                             {icon}
                         </MuiIcon>
-                    </Stack>
+                    }
+                    title={
+                        <Typography
+                            sx={{
+                                color: `${colour}.contrastText`,
+                            }}
+                            variant="h3">
+                            {headline}
+                        </Typography>
+                    }
+                    subheader={
+                        <Typography
+                            sx={{
+                                color: `${colour}.contrastText`,
+                            }}>
+                            {subheader}
+                        </Typography>
+                    }
+                />
+                <CardContent component={Stack} spacing={2}>
                     <Typography
                         sx={{
                             color: `${colour}.contrastText`,

@@ -1,10 +1,11 @@
 import { JSX, useState, useEffect, useCallback } from "react";
 
-import { Typography, Chip } from "@mui/material";
+import { Typography, Stack, Paper } from "@mui/material";
 
 import { PageWrapper } from "@/components/PageWrapper";
+import { PopupModal } from "@/components/PopupModal";
 
-const init = 30;
+const init = 60;
 
 type TTriviaCategory = {
     id: number;
@@ -58,7 +59,22 @@ type QuestionResponse = {
     incorrect_answers: string[];
 };
 
+const shuffleArray = (array: string[]) => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [
+            shuffledArray[j],
+            shuffledArray[i],
+        ];
+    }
+    return shuffledArray;
+};
+
 export const TriviaQuestions = (): JSX.Element => {
+    const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+
+    const [open, setOpen] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [countdown, setCountdown] = useState<number>(init);
     const [cancel, setCancel] = useState<boolean>(false);
@@ -113,7 +129,8 @@ export const TriviaQuestions = (): JSX.Element => {
                 stopTimer();
             }, 10000);
         }
-        setQuestions(undefined);
+        // setShuffledOptions([]);
+        // // setQuestions(undefined);
         stopTimer();
     };
 
@@ -137,59 +154,86 @@ export const TriviaQuestions = (): JSX.Element => {
         }
     }, [countdown, stopTimer]);
 
+    useEffect(() => {
+        if (questions) {
+            const allOptions = [
+                questions.correct_answer,
+                ...questions.incorrect_answers,
+            ];
+            const shuffledOptions = shuffleArray(allOptions);
+            setShuffledOptions(shuffledOptions);
+        }
+    }, [questions]);
+
+    const setColorForAnswer = (answer: string): string => {
+        if (!cancel) {
+            if (answer === questions?.correct_answer) {
+                return "success.main";
+            }
+            return "error.main";
+        }
+        return "white";
+    };
+
     return (
-        <PageWrapper
-            color={cancel ? "primary" : "warning"}
-            onClick={handleStartTimeout}>
-            <Typography textAlign="center" color="white" variant="h1">
-                Trivia
-            </Typography>
-            <Typography textAlign="center" color="white" variant="subtitle1">
-                Category:&nbsp;{triviaCategory.name}
-            </Typography>
-            {!cancel ? (
-                <Typography textAlign="center" color="white" variant="h4">
-                    Tap anywhere for a new question
+        <>
+            <PopupModal
+                open={open}
+                onClose={() => setOpen(false)}
+                title="Lit Trivia"
+                rules={[
+                    "Tap the screen to get a new question.",
+                    `Everyone has ${init} seconds to answer the question.`,
+                    "The person who answers correctly can choose who finishes their drink.",
+                ]}
+            />
+            <PageWrapper
+                color={cancel ? "primary" : "warning"}
+                onClick={handleStartTimeout}>
+                <Typography textAlign="center" color="white" variant="h1">
+                    Trivia
                 </Typography>
-            ) : (
-                questions && (
+                <Typography textAlign="center" color="white" variant="h3">
+                    Category:&nbsp;{triviaCategory.name}
+                </Typography>
+                {!cancel && (
+                    <Typography textAlign="center" color="white" variant="h3">
+                        Tap anywhere for a new question
+                    </Typography>
+                )}
+                {questions && (
                     <>
                         <Typography
                             textAlign="center"
                             sx={{ color: "white" }}
-                            variant="h4">
+                            variant="h3">
                             {decodeHTMLEntities(questions.question)}
                         </Typography>
-                        {questions.incorrect_answers.map((item, index) => (
-                            <Typography
-                                textAlign="center"
-                                key={index}
-                                color="error">
-                                {decodeHTMLEntities(item)}
-                            </Typography>
-                        ))}
-                        <Typography
-                            textAlign="center"
-                            sx={{ color: "success.main" }}>
-                            {decodeHTMLEntities(questions.correct_answer)}
-                        </Typography>
+                        <Stack spacing={2} sx={{ py: 2 }}>
+                            {shuffledOptions.map((item, index) => (
+                                <Typography
+                                    variant="h3"
+                                    textAlign="center"
+                                    key={index}
+                                    sx={{ color: setColorForAnswer(item) }}>
+                                    {decodeHTMLEntities(item)}
+                                </Typography>
+                            ))}
+                        </Stack>
                     </>
-                )
-            )}
-            {error && (
-                <Typography textAlign="center" color="error" variant="h4">
-                    {error}
-                </Typography>
-            )}
-            <Typography textAlign="center" color="white">
-                Time remaining
-            </Typography>
-            <Chip
-                color="default"
-                sx={{ width: 100, color: "white" }}
-                label={countdown}
-            />
-        </PageWrapper>
+                )}
+                {error && (
+                    <Typography textAlign="center" color="error" variant="h4">
+                        {error}
+                    </Typography>
+                )}
+                <Paper sx={{ p: 1, borderRadius: 200, width: 100 }}>
+                    <Typography variant="h6" textAlign="center">
+                        {countdown}
+                    </Typography>
+                </Paper>
+            </PageWrapper>
+        </>
     );
 };
 

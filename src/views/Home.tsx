@@ -12,33 +12,36 @@ export const Home = (): JSX.Element => {
         <Box sx={{ mx: "1rem" }}>
             <Stack spacing={2}>
                 <GameCard
-                    name="King's Cup"
-                    body="A drinking game for the whole gang!"
+                    headline="King's Cup"
+                    subheader="Time to get lit!"
+                    body="Unleash the good times at your in-person gatherings with King's Cup! No need for a deck!"
                     pageSlug="kings-cup"
                     colour="error"
                     icon={<SpadeIcon fontSize="large" />}
                 />
                 <GameCard
-                    name="Trivia"
-                    body="Test your knowledge!"
+                    headline="Trivia"
+                    subheader="Test your knowledge!"
+                    body="Not gonna lie, these are hard, I didn't even write them!"
                     pageSlug="trivia"
                     colour="warning"
                     icon={<HourglassTopRoundedIcon fontSize="large" />}
                 />
                 <GameCard
-                    name="My word"
-                    body="Generate a random word!"
-                    pageSlug="word-generator"
+                    headline="Charades"
+                    subheader="Time to act!"
+                    body="Yes, it may be a little cringe, but this version should get everyone laughing!"
+                    pageSlug="charades"
                     colour="info"
                     icon={<ChatBubbleOutlineRoundedIcon fontSize="large" />}
                 />
-                <GameCard
-                    name="Cahütte"
+                {/* <GameCard
+                    headline="Cahütte"
                     body="Welcome to the home page!"
                     pageSlug=""
                     colour="success"
                     icon={<ChatBubbleOutlineRoundedIcon fontSize="large" />}
-                />
+                /> */}
             </Stack>
         </Box>
     );
