@@ -1,6 +1,8 @@
 import { JSX, useState, useEffect, useCallback } from "react";
 
-import { Typography, Card, Chip, Stack, CardActionArea } from "@mui/material";
+import { Typography, Chip } from "@mui/material";
+
+import { PageWrapper } from "@/components/PageWrapper";
 
 const init = 30;
 
@@ -136,71 +138,58 @@ export const TriviaQuestions = (): JSX.Element => {
     }, [countdown, stopTimer]);
 
     return (
-        <Stack spacing={2}>
-            <Card
-                elevation={0}
-                sx={{
-                    backgroundColor: !cancel ? "warning.main" : "primary.main",
-                }}>
-                <CardActionArea
-                    onClick={handleStartTimeout}
-                    sx={{ p: 2, minHeight: "100vh" }}>
-                    <Stack
-                        sx={{ my: 1 }}
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={2}>
-                        <Typography color="white" variant="h1">
-                            Trivia
+        <PageWrapper
+            color={cancel ? "primary" : "warning"}
+            onClick={handleStartTimeout}>
+            <Typography textAlign="center" color="white" variant="h1">
+                Trivia
+            </Typography>
+            <Typography textAlign="center" color="white" variant="subtitle1">
+                Category:&nbsp;{triviaCategory.name}
+            </Typography>
+            {!cancel ? (
+                <Typography textAlign="center" color="white" variant="h4">
+                    Tap anywhere for a new question
+                </Typography>
+            ) : (
+                questions && (
+                    <>
+                        <Typography
+                            textAlign="center"
+                            sx={{ color: "white" }}
+                            variant="h4">
+                            {decodeHTMLEntities(questions.question)}
                         </Typography>
-                        <Typography color="white" variant="subtitle1">
-                            Category:&nbsp;{triviaCategory.name}
+                        {questions.incorrect_answers.map((item, index) => (
+                            <Typography
+                                textAlign="center"
+                                key={index}
+                                color="error">
+                                {decodeHTMLEntities(item)}
+                            </Typography>
+                        ))}
+                        <Typography
+                            textAlign="center"
+                            sx={{ color: "success.main" }}>
+                            {decodeHTMLEntities(questions.correct_answer)}
                         </Typography>
-                        {!cancel ? (
-                            <Typography color="white" variant="h4">
-                                Tap anywhere for a new question
-                            </Typography>
-                        ) : (
-                            questions && (
-                                <>
-                                    <Typography
-                                        sx={{ color: "white" }}
-                                        variant="h4">
-                                        {decodeHTMLEntities(questions.question)}
-                                    </Typography>
-                                    {questions.incorrect_answers.map(
-                                        (item, index) => (
-                                            <Typography
-                                                key={index}
-                                                color="error">
-                                                {decodeHTMLEntities(item)}
-                                            </Typography>
-                                        )
-                                    )}
-                                    <Typography sx={{ color: "success.main" }}>
-                                        {decodeHTMLEntities(
-                                            questions.correct_answer
-                                        )}
-                                    </Typography>
-                                </>
-                            )
-                        )}
-                        {error && (
-                            <Typography color="error" variant="h4">
-                                {error}
-                            </Typography>
-                        )}
-                        <Typography color="white">Time remaining</Typography>
-                        <Chip
-                            color="default"
-                            sx={{ width: 100, color: "white" }}
-                            label={countdown}
-                        />
-                    </Stack>
-                </CardActionArea>
-            </Card>
-        </Stack>
+                    </>
+                )
+            )}
+            {error && (
+                <Typography textAlign="center" color="error" variant="h4">
+                    {error}
+                </Typography>
+            )}
+            <Typography textAlign="center" color="white">
+                Time remaining
+            </Typography>
+            <Chip
+                color="default"
+                sx={{ width: 100, color: "white" }}
+                label={countdown}
+            />
+        </PageWrapper>
     );
 };
 

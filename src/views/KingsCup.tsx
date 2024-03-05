@@ -1,13 +1,8 @@
 import { JSX, useState } from "react";
 
-import {
-    Box,
-    CardActionArea,
-    Typography,
-    Stack,
-    SvgIconProps,
-} from "@mui/material";
+import { Typography, SvgIconProps } from "@mui/material";
 
+import { PageWrapper } from "@/components/PageWrapper";
 import { PopupModal } from "@/components/PopupModal";
 import { ClubsIcon } from "@/Icons/Clubs";
 import { DiamondsIcon } from "@/Icons/Diamonds";
@@ -128,13 +123,6 @@ export const KingsCup = (): JSX.Element => {
         });
     };
 
-    const rules = [
-        "Tap the screen to draw a card.",
-        "Follow the instructions on the card.",
-        "Pass the phone to the next person on your left.",
-        "Tap the screen to draw a card.",
-    ];
-
     const Icon = (props: SvgIconProps): JSX.Element => {
         switch (kingsCup.suit) {
             case "Hearts":
@@ -152,70 +140,65 @@ export const KingsCup = (): JSX.Element => {
 
     return (
         <>
-            <PopupModal title="Kings Cup" rules={rules} />
-            <Box
-                sx={{
-                    backgroundColor: `${kingsCup.color}.main`,
-                    height: "90vh",
-                }}
-                component={CardActionArea}
-                onClick={random}>
-                <Stack
-                    sx={{ my: 1 }}
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}>
-                    {!kingsCup.value ? (
-                        <>
-                            <Typography textAlign="center" variant="h1">
-                                Draw a card to reveal your fate!
-                            </Typography>
-                            <Typography textAlign="center" variant="h3">
-                                Tap anywhere to draw a card
-                            </Typography>
-                        </>
-                    ) : (
-                        <>
-                            <Icon
-                                sx={{
-                                    color: `${kingsCup.color}.contrastText`,
-                                    width: 55,
-                                    height: 55,
-                                }}
-                            />
-                            <Typography
-                                sx={{
-                                    color: `${kingsCup.color}.contrastText`,
-                                }}
-                                variant="h1">
-                                {" "}
-                                {kingsCup.value} of {kingsCup.suit}
-                            </Typography>
-                            <Typography
-                                sx={{
-                                    color: `${kingsCup.color}.contrastText`,
-                                }}
-                                variant="h3">
-                                {kingsCup.name}
-                            </Typography>
-                            <Typography
-                                textAlign="center"
-                                variant="h3"
-                                sx={{
-                                    maxWidth: {
-                                        xs: "90%",
-                                        sm: "80%",
-                                        md: "50%",
-                                    },
-                                    color: `${kingsCup.color}.contrastText`,
-                                }}>
-                                {kingsCup.description}
-                            </Typography>
-                        </>
-                    )}
-                </Stack>
-            </Box>
+            <PopupModal
+                title="Kings Cup"
+                rules={[
+                    "Tap the screen to draw a card.",
+                    "Follow the instructions on the card.",
+                    "Pass the phone to the next person on your left.",
+                    "Tap the screen to draw a card.",
+                ]}
+            />
+            <PageWrapper color={kingsCup.color} onClick={random}>
+                {!kingsCup.value ? (
+                    <>
+                        <Typography textAlign="center" variant="h1">
+                            Draw a card to reveal your fate!
+                        </Typography>
+                        <Typography textAlign="center" variant="h3">
+                            Tap anywhere to draw a card
+                        </Typography>
+                    </>
+                ) : (
+                    <>
+                        <Icon
+                            sx={{
+                                color: `${kingsCup.color}.contrastText`,
+                                width: 55,
+                                height: 55,
+                            }}
+                        />
+                        <Typography
+                            sx={{
+                                color: `${kingsCup.color}.contrastText`,
+                            }}
+                            variant="h1">
+                            {" "}
+                            {kingsCup.value} of {kingsCup.suit}
+                        </Typography>
+                        <Typography
+                            sx={{
+                                color: `${kingsCup.color}.contrastText`,
+                            }}
+                            variant="h3">
+                            {kingsCup.name}
+                        </Typography>
+                        <Typography
+                            textAlign="center"
+                            variant="h3"
+                            sx={{
+                                maxWidth: {
+                                    xs: "90%",
+                                    sm: "80%",
+                                    md: "50%",
+                                },
+                                color: `${kingsCup.color}.contrastText`,
+                            }}>
+                            {kingsCup.description}
+                        </Typography>
+                    </>
+                )}
+            </PageWrapper>
         </>
     );
 };
