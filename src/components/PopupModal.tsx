@@ -12,7 +12,7 @@ import {
 type TPopupModal = {
     title: string;
     rules: string[];
-    onClose: (open: boolean) => void;
+    onClose: () => void;
     open: boolean;
 };
 
@@ -34,7 +34,7 @@ export const PopupModal = (props: TPopupModal): JSX.Element => {
                 </ol>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={() => onClose(false)}>
+                <Button variant="contained" onClick={onClose}>
                     Get started
                 </Button>
             </DialogActions>

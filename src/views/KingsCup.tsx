@@ -116,8 +116,6 @@ export const KingsCup = (): JSX.Element => {
     });
     const drawnCards = JSON.parse(localStorage.getItem("drawnCards") || "[]");
 
-    console.log(drawnCards.length);
-
     useEffect(() => {
         if (kingsCup === init && drawnCards.length > 0) {
             setGame({
