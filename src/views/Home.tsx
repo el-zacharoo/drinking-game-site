@@ -20,21 +20,22 @@ export const Home = (): JSX.Element => {
                     icon={<SpadeIcon fontSize="large" />}
                 />
                 <GameCard
-                    headline="Trivia"
-                    subheader="Test your knowledge!"
-                    body="Not gonna lie, these are hard, I didn't even write them!"
-                    pageSlug="trivia"
-                    colour="warning"
-                    icon={<HourglassTopRoundedIcon fontSize="large" />}
-                />
-                <GameCard
                     headline="Charades"
                     subheader="Time to act!"
                     body="Yes, it may be a little cringe, but this version should get everyone laughing!"
                     pageSlug="charades"
-                    colour="info"
+                    colour="warning"
                     icon={<ChatBubbleOutlineRoundedIcon fontSize="large" />}
                 />
+                <GameCard
+                    headline="Trivia"
+                    subheader="Test your knowledge!"
+                    body="Not gonna lie, these are hard, I didn't even write them!"
+                    pageSlug="trivia"
+                    colour="info"
+                    icon={<HourglassTopRoundedIcon fontSize="large" />}
+                />
+
                 {/* <GameCard
                     headline="Cahütte"
                     body="Welcome to the home page!"

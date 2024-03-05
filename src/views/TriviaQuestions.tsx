@@ -168,9 +168,9 @@ export const TriviaQuestions = (): JSX.Element => {
     const setColorForAnswer = (answer: string): string => {
         if (!cancel) {
             if (answer === questions?.correct_answer) {
-                return "success.main";
+                return "success.dark";
             }
-            return "error.main";
+            return "white";
         }
         return "white";
     };
@@ -188,7 +188,7 @@ export const TriviaQuestions = (): JSX.Element => {
                 ]}
             />
             <PageWrapper
-                color={cancel ? "primary" : "warning"}
+                color={cancel ? "primary" : "info"}
                 onClick={handleStartTimeout}>
                 <Typography textAlign="center" color="white" variant="h1">
                     Trivia
@@ -227,7 +227,9 @@ export const TriviaQuestions = (): JSX.Element => {
                         {error}
                     </Typography>
                 )}
-                <Paper sx={{ p: 1, borderRadius: 200, width: 100 }}>
+                <Paper
+                    elevation={0}
+                    sx={{ p: 1, borderRadius: 200, width: 100 }}>
                     <Typography variant="h6" textAlign="center">
                         {countdown}
                     </Typography>
