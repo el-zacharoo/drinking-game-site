@@ -88,31 +88,62 @@ const kingsCupObj: { [key: string]: TKingsCup } = {
 };
 
 const suit = ["Hearts", "Diamonds", "Clubs", "Spades"];
+const init = {
+    name: "",
+    description: "",
+    value: "",
+    suit: "",
+    color: "",
+};
+
+const suitColor = (randomSuit: string): string => {
+    let color = "";
+    if (randomSuit === "Hearts" || randomSuit === "Diamonds") {
+        color = "error";
+    }
+    if (randomSuit === "Clubs" || randomSuit === "Spades") {
+        color = "primary";
+    }
+    return color;
+};
 
 export const KingsCup = (): JSX.Element => {
-    const [kingsCup, setKingsCup] = useState<TKingsCup>({
-        name: "",
-        description: "",
-        value: "",
-        suit: "",
+    const [kingsCup, setKingsCup] = useState<TKingsCup>(init);
+    const [game, setGame] = useState<{ [key: string]: string }>({
+        title: "Draw a card to reveal your fate!",
+        body: "Tap anywhere to draw a card",
     });
 
-    const suitColor = (randomSuit: string): string => {
-        let color = "";
-        if (randomSuit === "Hearts" || randomSuit === "Diamonds") {
-            color = "error";
-        }
-        if (randomSuit === "Clubs" || randomSuit === "Spades") {
-            color = "primary";
-        }
-        return color;
-    };
+    const randomize = (): void => {
+        const drawnCards = JSON.parse(
+            localStorage.getItem("drawnCards") || "[]"
+        );
 
-    const random = (): void => {
+        if (drawnCards.length >= 49) {
+            localStorage.removeItem("drawnCards");
+            setKingsCup(init);
+            setGame({
+                title: "You've drawn all the cards!",
+                body: "Tap anywhere to start over.",
+            });
+            return;
+        }
+
         const categories = Object.values(kingsCupObj);
         const randomIndex = Math.floor(Math.random() * categories.length);
         const randomSuit = suit[Math.floor(Math.random() * suit.length)];
         const randomCategory = categories[randomIndex];
+
+        if (drawnCards.includes(`${randomCategory.value + randomSuit}`)) {
+            randomize();
+            return;
+        }
+        const updatedDrawnCards = [
+            ...drawnCards,
+            `${randomCategory.value + randomSuit}`,
+        ];
+
+        localStorage.setItem("drawnCards", JSON.stringify(updatedDrawnCards));
 
         setKingsCup({
             value: randomCategory.value,
@@ -134,7 +165,8 @@ export const KingsCup = (): JSX.Element => {
             case "Spades":
                 return <SpadesIcon {...props} />;
             default:
-                return <ClubsIcon {...props} />;
+                console.error("Invalid suit:", kingsCup.suit);
+                return <></>;
         }
     };
 
@@ -149,14 +181,14 @@ export const KingsCup = (): JSX.Element => {
                     "Tap the screen to draw a card.",
                 ]}
             />
-            <PageWrapper color={kingsCup.color} onClick={random}>
+            <PageWrapper color={kingsCup.color} onClick={randomize}>
                 {!kingsCup.value ? (
                     <>
                         <Typography textAlign="center" variant="h1">
-                            Draw a card to reveal your fate!
+                            {game.title}
                         </Typography>
                         <Typography textAlign="center" variant="h3">
-                            Tap anywhere to draw a card
+                            {game.body}
                         </Typography>
                     </>
                 ) : (
