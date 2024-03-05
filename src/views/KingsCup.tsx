@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import { Typography, SvgIconProps } from "@mui/material";
 
@@ -108,17 +108,27 @@ const suitColor = (randomSuit: string): string => {
 };
 
 export const KingsCup = (): JSX.Element => {
+    const [open, setOpen] = useState<boolean>(true);
     const [kingsCup, setKingsCup] = useState<TKingsCup>(init);
     const [game, setGame] = useState<{ [key: string]: string }>({
         title: "Draw a card to reveal your fate!",
         body: "Tap anywhere to draw a card",
     });
+    const drawnCards = JSON.parse(localStorage.getItem("drawnCards") || "[]");
+
+    console.log(drawnCards.length);
+
+    useEffect(() => {
+        if (kingsCup === init && drawnCards.length > 0) {
+            setGame({
+                title: "Game in progress!",
+                body: "Tap anywhere to continue.",
+            });
+            setOpen(false);
+        }
+    }, [drawnCards.length, kingsCup]);
 
     const randomize = (): void => {
-        const drawnCards = JSON.parse(
-            localStorage.getItem("drawnCards") || "[]"
-        );
-
         if (drawnCards.length >= 49) {
             localStorage.removeItem("drawnCards");
             setKingsCup(init);
@@ -173,6 +183,8 @@ export const KingsCup = (): JSX.Element => {
     return (
         <>
             <PopupModal
+                open={open}
+                onClose={() => setOpen(false)}
                 title="Kings Cup"
                 rules={[
                     "Tap the screen to draw a card.",
@@ -182,7 +194,7 @@ export const KingsCup = (): JSX.Element => {
                 ]}
             />
             <PageWrapper color={kingsCup.color} onClick={randomize}>
-                {!kingsCup.value ? (
+                {kingsCup === init ? (
                     <>
                         <Typography textAlign="center" variant="h1">
                             {game.title}

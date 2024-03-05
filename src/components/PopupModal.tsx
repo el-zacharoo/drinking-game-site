@@ -1,4 +1,4 @@
-import { JSX, useState, useEffect } from "react";
+import { JSX } from "react";
 
 import {
     Typography,
@@ -12,18 +12,15 @@ import {
 type TPopupModal = {
     title: string;
     rules: string[];
+    onClose: (open: boolean) => void;
+    open: boolean;
 };
 
 export const PopupModal = (props: TPopupModal): JSX.Element => {
-    const { title, rules } = props;
-    const [open, setOpen] = useState<boolean>(true);
-
-    useEffect(() => {
-        setOpen(true);
-    }, []);
+    const { title, rules, onClose } = props;
 
     return (
-        <Dialog open={open} onClose={() => setOpen(false)}>
+        <Dialog {...props}>
             <DialogTitle variant="h1" component={Typography}>
                 {title}
             </DialogTitle>
@@ -37,7 +34,7 @@ export const PopupModal = (props: TPopupModal): JSX.Element => {
                 </ol>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={() => setOpen(false)}>
+                <Button variant="contained" onClick={() => onClose(false)}>
                     Get started
                 </Button>
             </DialogActions>
