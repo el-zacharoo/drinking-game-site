@@ -96,6 +96,11 @@ const init = {
     color: "",
 };
 
+const gameStateInit = {
+    title: "Draw a card to reveal your fate!",
+    body: "Tap anywhere to draw a card",
+};
+
 const suitColor = (randomSuit: string): string => {
     let color = "";
     if (randomSuit === "Hearts" || randomSuit === "Diamonds") {
@@ -110,23 +115,16 @@ const suitColor = (randomSuit: string): string => {
 export const KingsCup = (): JSX.Element => {
     const [open, setOpen] = useState<boolean>(true);
     const [kingsCup, setKingsCup] = useState<TKingsCup>(init);
-    const [game, setGame] = useState<{ [key: string]: string }>({
-        title: "Draw a card to reveal your fate!",
-        body: "Tap anywhere to draw a card",
-    });
+    const [game, setGame] = useState<{ [key: string]: string }>(gameStateInit);
     const drawnCards = JSON.parse(localStorage.getItem("drawnCards") || "[]");
-
-    useEffect(() => {
-        if (kingsCup === init && drawnCards.length > 0) {
-            setGame({
-                title: "Game in progress!",
-                body: "Tap anywhere to continue.",
-            });
-            setOpen(false);
-        }
-    }, [drawnCards.length, kingsCup]);
+    const gameState = drawnCards.length > 0 && kingsCup === init;
 
     const randomize = (): void => {
+        const categories = Object.values(kingsCupObj);
+        const randomIndex = Math.floor(Math.random() * categories.length);
+        const randomSuit = suit[Math.floor(Math.random() * suit.length)];
+        const randomCategory = categories[randomIndex];
+
         if (drawnCards.length >= 49) {
             localStorage.removeItem("drawnCards");
             setKingsCup(init);
@@ -136,11 +134,6 @@ export const KingsCup = (): JSX.Element => {
             });
             return;
         }
-
-        const categories = Object.values(kingsCupObj);
-        const randomIndex = Math.floor(Math.random() * categories.length);
-        const randomSuit = suit[Math.floor(Math.random() * suit.length)];
-        const randomCategory = categories[randomIndex];
 
         if (drawnCards.includes(`${randomCategory.value + randomSuit}`)) {
             randomize();
@@ -162,6 +155,17 @@ export const KingsCup = (): JSX.Element => {
         });
     };
 
+    useEffect(() => {
+        if (gameState) {
+            setGame({
+                title: "Game in progress!",
+                body: "Tap anywhere to draw a card",
+            });
+        } else {
+            setGame(gameStateInit);
+        }
+    }, [gameState, setKingsCup]);
+
     const Icon = (props: SvgIconProps): JSX.Element => {
         switch (kingsCup.suit) {
             case "Hearts":
@@ -181,9 +185,11 @@ export const KingsCup = (): JSX.Element => {
     return (
         <>
             <PopupModal
+                variant={gameState ? "pause" : "rules"}
                 open={open}
+                game="drawnCards"
                 onClose={() => setOpen(false)}
-                title="Kings Cup"
+                title={gameState ? "Game in progress!" : "Kings Cup"}
                 rules={[
                     "Tap the screen to draw a card.",
                     "Follow the instructions on the card.",

@@ -129,8 +129,7 @@ export const TriviaQuestions = (): JSX.Element => {
                 stopTimer();
             }, 10000);
         }
-        // setShuffledOptions([]);
-        // // setQuestions(undefined);
+
         stopTimer();
     };
 
@@ -178,6 +177,7 @@ export const TriviaQuestions = (): JSX.Element => {
     return (
         <>
             <PopupModal
+                variant="rules"
                 open={open}
                 onClose={() => setOpen(false)}
                 title="Lit Trivia"
