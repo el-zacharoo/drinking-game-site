@@ -95,7 +95,6 @@ const init = {
     suit: "",
     color: "",
 };
-
 const gameStateInit = {
     title: "Draw a card to reveal your fate!",
     body: "Tap anywhere to draw a card",
