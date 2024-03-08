@@ -15,6 +15,7 @@ import {
     MenuItem,
     ListItemIcon,
     ListItemText,
+    PaletteOptions,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +32,7 @@ type TPauseModal = {
     name: string;
     icon: JSX.Element;
     action: () => void;
-    color: string;
+    color: keyof PaletteOptions;
 };
 
 export const PopupModal = (props: TPopupModal): JSX.Element => {
@@ -113,7 +114,14 @@ const PauseModal = ({ onClose, game }: TPopupModal): JSX.Element => {
                 {pauseArr.map((item, index) => (
                     <MenuItem
                         key={index}
-                        sx={{ color: `${item.color}.main`, height: 50 }}
+                        sx={{
+                            color: `${item.color}.main`,
+                            height: 50,
+                            backgroundColor: `rgba(${item.color}.main, 0.4)`,
+                            "&:hover": {
+                                backgroundColor: `rgba(${item.color}.main / 0.4)`,
+                            },
+                        }}
                         onClick={item.action}>
                         <ListItemIcon sx={{ color: `${item.color}.main` }}>
                             {item.icon}

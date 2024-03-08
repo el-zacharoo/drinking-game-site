@@ -1,9 +1,9 @@
 import React, { JSX } from "react";
 
-import { Box, CardActionArea, Stack } from "@mui/material";
+import { Box, CardActionArea, Stack, PaletteOptions } from "@mui/material";
 
 type TPagewrapper = {
-    color: string;
+    color: keyof PaletteOptions;
     onClick: () => void;
     children: React.ReactNode;
 };

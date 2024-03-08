@@ -11,6 +11,9 @@ export const palette: PaletteOptions = {
     info: {
         main: "#5972C5"
     },
+    warning: {
+        main: "#ffc107"
+    },
     text: {
         primary: "#111830 ",
         secondary: "#18263A",

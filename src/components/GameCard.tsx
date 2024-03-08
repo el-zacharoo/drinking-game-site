@@ -8,23 +8,16 @@ import {
     Typography,
     Icon as MuiIcon,
     Stack,
+    PaletteOptions,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-type ColorIndex =
-    | "primary"
-    | "secondary"
-    | "success"
-    | "error"
-    | "warning"
-    | "info";
 
 type GameCardProps = {
     headline: string;
     subheader: string;
     body: string;
     pageSlug: string;
-    colour: ColorIndex;
+    colour: keyof PaletteOptions;
     icon: JSX.Element;
 };
 

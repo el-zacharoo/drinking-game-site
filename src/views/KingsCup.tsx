@@ -1,6 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 
-import { Typography, SvgIconProps } from "@mui/material";
+import { Typography, SvgIconProps, PaletteOptions } from "@mui/material";
 
 import { PageWrapper } from "@/components/PageWrapper";
 import { PopupModal } from "@/components/PopupModal";
@@ -101,14 +101,9 @@ const gameStateInit = {
 };
 
 const suitColor = (randomSuit: string): string => {
-    let color = "";
-    if (randomSuit === "Hearts" || randomSuit === "Diamonds") {
-        color = "error";
-    }
-    if (randomSuit === "Clubs" || randomSuit === "Spades") {
-        color = "primary";
-    }
-    return color;
+    return randomSuit === "Hearts" || randomSuit === "Diamonds"
+        ? "error"
+        : "primary";
 };
 
 export const KingsCup = (): JSX.Element => {
@@ -196,7 +191,9 @@ export const KingsCup = (): JSX.Element => {
                     "Tap the screen to draw a card.",
                 ]}
             />
-            <PageWrapper color={kingsCup.color} onClick={randomize}>
+            <PageWrapper
+                color={kingsCup.color as keyof PaletteOptions}
+                onClick={randomize}>
                 {kingsCup === init ? (
                     <>
                         <Typography textAlign="center" variant="h1">
