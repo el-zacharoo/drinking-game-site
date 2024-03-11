@@ -1,4 +1,4 @@
-import { useState, JSX } from "react";
+import { useState, useEffect, JSX } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
@@ -15,12 +15,7 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import { useNavigate } from "react-router-dom";
 
-import { menuItems } from "@/MenuItems";
-
-type NavLinks = {
-    name: string;
-    pageSlug: string;
-};
+import { useUser } from "@/auth/userContext";
 
 const appName = import.meta.env.VITE_APP_NAME || "";
 
@@ -48,7 +43,7 @@ const Header = (): JSX.Element => {
                     color="inherit">
                     {appName}
                 </Link>
-                <OpenedMenu menuItems={menuItems} handleNavigate={navigate} />
+                <OpenedMenu handleNavigate={navigate} />
             </Toolbar>
         </AppBar>
     );
@@ -57,13 +52,13 @@ const Header = (): JSX.Element => {
 export default Header;
 
 type OpenedMenuProps = {
-    menuItems: NavLinks[];
     handleNavigate: (path: string) => void;
 };
 
 const OpenedMenu = (props: OpenedMenuProps): JSX.Element => {
-    const { menuItems, handleNavigate } = props;
+    const { handleNavigate } = props;
     const [open, setOpen] = useState<boolean>(false);
+    const { state, getUser, signOut } = useUser();
 
     const navigateFn = (path: string): void => {
         handleNavigate(path);
@@ -81,10 +76,30 @@ const OpenedMenu = (props: OpenedMenuProps): JSX.Element => {
     const boxShadow =
         "rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 5px 8px 0px, rgba(0, 0, 0, 0.12) 0px 1px 14px 0px";
 
+    useEffect(() => {
+        getUser();
+    }, [getUser]);
+
+    const menuItems = [
+        { name: "Home", fn: () => navigateFn("/") },
+        { name: "Account", fn: () => navigateFn("/account") },
+        { name: "logout", fn: signOut },
+    ];
+
+    const loggedOutMenuItems = [
+        { name: "Home", fn: () => navigateFn("/") },
+        { name: "Login", fn: () => navigateFn("/sign-in") },
+        { name: "Create an account", fn: () => navigateFn("/register") },
+    ];
+
     return (
         <Box>
             <IconButton size="large" onClick={handleOpen} color="inherit">
-                <MenuRoundedIcon fontSize="large" />
+                {state?.user ? (
+                    <Avatar src={state.user.picture} />
+                ) : (
+                    <MenuRoundedIcon fontSize="large" />
+                )}
             </IconButton>
             <Modal open={open} onClose={handleClose}>
                 <Box
@@ -125,21 +140,40 @@ const OpenedMenu = (props: OpenedMenuProps): JSX.Element => {
                             mt: 1,
                             boxShadow,
                         }}>
-                        {menuItems.map((item, index) => (
-                            <ListItem key={index}>
-                                <ListItemButton
-                                    sx={{
-                                        color: "white",
-                                        borderRadius: "8px",
-                                        "&:hover": {
-                                            backgroundColor: "primary.light",
-                                        },
-                                    }}
-                                    onClick={() => navigateFn(item.pageSlug)}>
-                                    {item.name}
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                        {state.user &&
+                            menuItems.map((item, index) => (
+                                <ListItem key={index}>
+                                    <ListItemButton
+                                        sx={{
+                                            color: "white",
+                                            borderRadius: "8px",
+                                            "&:hover": {
+                                                backgroundColor:
+                                                    "primary.light",
+                                            },
+                                        }}
+                                        onClick={() => item.fn()}>
+                                        {item.name}
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        {!state.user &&
+                            loggedOutMenuItems.map((item, index) => (
+                                <ListItem key={index}>
+                                    <ListItemButton
+                                        sx={{
+                                            color: "white",
+                                            borderRadius: "8px",
+                                            "&:hover": {
+                                                backgroundColor:
+                                                    "primary.light",
+                                            },
+                                        }}
+                                        onClick={() => item.fn()}>
+                                        {item.name}
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
                     </List>
                 </Box>
             </Modal>

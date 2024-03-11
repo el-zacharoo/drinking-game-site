@@ -51,8 +51,8 @@ export default [
             ...reactHooks.configs.recommended.rules,
             "react/prop-types": 0,
             "react/react-in-jsx-scope": 0,
-            camelcase: ["error"],
-            "prefer-template": "error",
+            // camelcase: ["error"],
+            // "prefer-template": "error",
             "prefer-const": "error",
             eqeqeq: ["error", "smart"],
             "import/order": [

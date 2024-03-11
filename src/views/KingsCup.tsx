@@ -72,7 +72,8 @@ const kingsCupObj: { [key: string]: TKingsCup } = {
     JACK: {
         value: "Jack",
         name: "Never Have I Ever",
-        description: "Play never have I ever.",
+        description:
+            "Everyone puts up 3 fingers, and you go around the circle saying things you've never done. If you've done it, put a finger down. First person to put all 3 fingers down, drinks.",
     },
     QUEEN: {
         value: "Queen",
@@ -84,7 +85,7 @@ const kingsCupObj: { [key: string]: TKingsCup } = {
         value: "King",
         name: "King's Cup",
         description: "Pour some of your drink into the King's Cup.",
-    },
+    }
 };
 
 const suit = ["Hearts", "Diamonds", "Clubs", "Spades"];

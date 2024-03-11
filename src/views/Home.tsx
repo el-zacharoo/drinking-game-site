@@ -33,16 +33,16 @@ export const Home = (): JSX.Element => {
                     body="Not gonna lie, these are hard, I didn't even write them!"
                     pageSlug="trivia"
                     colour="info"
-                    icon={<HourglassTopRoundedIcon fontSize="large" />}
+                    icon={<ChatBubbleOutlineRoundedIcon fontSize="large" />}
                 />
-
-                {/* <GameCard
+                <GameCard
                     headline="Cahütte"
+                    subheader="Time to get creative!"
                     body="Welcome to the home page!"
                     pageSlug=""
                     colour="success"
-                    icon={<ChatBubbleOutlineRoundedIcon fontSize="large" />}
-                /> */}
+                    icon={<HourglassTopRoundedIcon fontSize="large" />}
+                />
             </Stack>
         </Box>
     );

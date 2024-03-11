@@ -124,7 +124,8 @@ export const TriviaQuestions = (): JSX.Element => {
                 setCountdown((prev) => prev - 1);
             }, 1000);
 
-            setIntervalId(newIntervalId);
+            setIntervalId(Number(newIntervalId));
+
             setTimeout(() => {
                 stopTimer();
             }, 10000);
